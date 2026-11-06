@@ -118,9 +118,21 @@ class App(tk.Tk):
             # Bewusst reduzierte Übersicht – zusätzliche Kacheln wurden entfernt.
         else:
             self.page_title.configure(text="Über Game Center")
-            self.page_subtitle.configure(text="Informationen zur aktuellen Version.")
-            self.info_card("Game Center", "Version 0.2.0\nDesktop-Oberfläche mit lokaler Einstellungsverwaltung.")
-            self.info_card("Datenspeicherung", f"Konfigurationsdatei:\n{CONFIG_FILE}")
+            self.page_subtitle.configure(text="Informationen zur aktuellen Version und Updates.")
+            self.info_card("Game Center", f"Version {CURRENT_VERSION}\\nGaming Launcher für Windows.")
+            self.info_card("Updates über GitHub", "Mit dem Update-Button kannst du nach einer neuen Version suchen und sie direkt von GitHub herunterladen.")
+            self.update_status = tk.Label(self.content, text="Update-Status: Noch nicht geprüft",
+                                          bg="#10141d", fg="#8d9aaf", font=("Segoe UI", 9))
+            self.update_status.pack(anchor="w", pady=(4, 10))
+            update_button = tk.Button(
+                self.content, text="Update", command=lambda: self.check_for_updates(manual=True),
+                bg="#1676d2", fg="white", activebackground="#2389ed",
+                activeforeground="white", bd=0, padx=24, pady=11,
+                font=("Segoe UI", 10, "bold"), cursor="hand2"
+            )
+            update_button.pack(anchor="w", pady=(0, 14))
+            self.info_card("GitHub-Repository", f"https://github.com/{GITHUB_REPO}/releases")
+            self.info_card("Datenspeicherung", f"Konfigurationsdatei:\\n{CONFIG_FILE}")
 
     def info_card(self, title, body):
         card = tk.Frame(self.content, bg="#19212e", padx=22, pady=18)
